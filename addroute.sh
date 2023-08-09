@@ -1,8 +1,8 @@
-#!/bin/ash
+#!/bin/sh
 # 添加和删除IPTV路由表项，使得所有设备均能访问IPTV网络183.59.0.0/16
-if [ "$1" != "-n" ];then
+if [ "$1" != "-n" ] && [ "$1" != "-d" ];then
   # 使用ping命令检测网络连接
-  ping -c 1 -w 1 183.59.168.27 > /dev/null 2>&1
+  ping -c 1 -W 1 183.59.168.27 > /dev/null 2>&1
   # 如果返回值为0，表示网络正常，就退出脚本
   if [ $? -eq 0 ]; then
     echo "网络正常，退出脚本"
@@ -21,8 +21,8 @@ count=0
 # 定义一个循环
 while true; do
   # 每隔3秒查找名称为ppp开头的接口名称
-  # 如果循环次数超过10次就退出
-    if [ $count -gt 10 ]; then
+  # 如果循环次数超过30次就退出
+  if [ $count -gt 30 ]; then
     echo "找不到两个ppp接口，退出脚本"
     exit 1
   fi
